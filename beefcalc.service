@@ -1,0 +1,23 @@
+# systemd service file for the Beef Calculator application
+# this file to be stored as /etc/systemd/system/beefcalc.service
+
+# sudo systemctl daemon-reload  # needed if/when the service file is changed
+# sudo systemctl enable <service-name>   # will ensure service restarts after a reboot
+# use the commands below to control the service
+#     sudo systemctl start <service-name>
+#     sudo systemctl stop <service-name>
+#     sudo systemctl restart <service-name>
+#     sudo systemctl status <service-name>
+
+[Unit]
+Description=Flask application to calculate beef cooking times
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/mwpython/beefcalc
+ExecStart=/usr/bin/python3 beefcalc.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

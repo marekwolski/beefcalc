@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+   <head>
+      <title>{{ title }}</title>
+   </head>
+
+   <body>
+      <h1>Hello, here are your beef cooking timings:</h1>
+      <p>These are based on a joint weight of {{weight}}kg and a desired serving time of {{carve}}.<br>
+      It includes {{warmup}} minutes to allow the oven to get to temperature (200&degC).</p>
+      <p><b style="font-size: larger;">{{ovenon}}</b> Take the joint out of the fridge. Switch oven on to heat to 200&degC.</p>
+      <p><b style="font-size: larger;">{{intooven}}</b> Put the beef into the oven, cooking at 200&degC for 20 minutes.</p>
+      <p><b style="font-size: larger;">{{tempdown}}</b> Turn the oven down to 160&degC and cook for a further {{maincook}} minutes.</p>
+      <p><b style="font-size: larger;">{{outofoven}}</b> Take the beef out of the oven to rest.</p>
+      <p><b style="font-size: larger;">{{carve}}</b> Carve, serve and enjoy!</p>
+      <br><br><hr>
+      Beef cooking times requested from this server at {{ time }}
+   </body>
+</html>
