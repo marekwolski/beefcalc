@@ -8,14 +8,18 @@
 #     sudo systemctl stop <service-name>
 #     sudo systemctl restart <service-name>
 #     sudo systemctl status <service-name>
+#
+# use the command below to see the logs
+#     sudo journalctl -u beefcalc
 
 [Unit]
 Description=Flask application to calculate beef cooking times
 After=network.target
 
 [Service]
-User=pi
-WorkingDirectory=/home/pi/mwpython/beefcalc
+# Use the 'ubuntu' user on Rasppi4
+User=ubuntu
+WorkingDirectory=/home/ubuntu/mwpython/beefcalc
 ExecStart=/usr/bin/python3 beefcalc.py
 Restart=always
 
