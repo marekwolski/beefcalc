@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
 from datetime import datetime, timedelta
+import smtplib, os
+from configparser import ConfigParser
+from email.message import EmailMessage
+
 app = Flask(__name__)
 
 def calctimings(vars):
@@ -17,6 +21,7 @@ def calctimings(vars):
    timings = {}
    timings['weight'] = weight
    timings['warmup'] = int(vars['warmup'])
+   timings['standing'] = int(vars['standing'])
    timings['maincook'] = int((weight*15*2.2)+15)
    timings['carve'] = serve.strftime('%H:%M')
    timings['outofoven'] = (serve - standing).strftime('%H:%M')
@@ -25,6 +30,45 @@ def calctimings(vars):
    timings['ovenon'] = (serve - standing - maincook - onhigh - warmup).strftime('%H:%M')
 
    return timings
+
+def sendtimings(vars):
+   emailconfig = ConfigParser()
+   emailconfigfile = os.path.expanduser('~/') + '.cfg/mail.cfg'
+   emailconfig.read(emailconfigfile)
+   mailserver = emailconfig.get('btmail', 'mailserver')
+   mailuser = emailconfig.get('btmail', 'mailuser')
+   mailpwd = emailconfig.get('btmail', 'mailpwd')
+
+   msg = EmailMessage()
+   msg['Subject'] = 'Beef cooking timings'
+   msg['From'] = mailuser
+   msg['To'] = 'marek.wolski+cookingbeef@gmail.com'
+
+   msgtext = (
+      f'<!DOCTYPE html>'
+      f'<html>'
+      f'<body>'
+      f'<h1>Hello, here are your beef cooking timings:</h1>'
+      f'<p>These are based on a joint weight of {vars["weight"]}kg and a desired serving time of {vars["carve"]}.<br>'
+      f'It includes {vars["warmup"]} minutes to allow the oven to get to temperature (200\N{DEGREE SIGN}C) '
+      f'and {vars["standing"]} minutes resting time before carving.</p>'
+      f'<p><b style="font-size: larger;">{vars["ovenon"]}</b> Take the joint out of the fridge. Switch oven on to heat to 200\N{DEGREE SIGN}C.</p>'
+      f'<p><b style="font-size: larger;">{vars["intooven"]}</b> Put the beef into the oven, cooking at 200\N{DEGREE SIGN}C for 20 minutes.</p>'
+      f'<p><b style="font-size: larger;">{vars["tempdown"]}</b> Turn the oven down to 160\N{DEGREE SIGN}C and cook for a further {vars["maincook"]} minutes.</p>'
+      f'<p><b style="font-size: larger;">{vars["outofoven"]}</b> Take the beef out of the oven to rest.</p>'
+      f'<p><b style="font-size: larger;">{vars["carve"]}</b> Carve, serve and enjoy!</p>'
+      f'<br><hr>'
+      f'Beef cooking times requested at {vars["time"]}'
+      f'</body>'
+      f'</html>'
+   )
+
+   msg.set_content(msgtext, subtype='html')
+
+   with smtplib.SMTP_SSL(mailserver, 465) as server:
+      server.login(mailuser, mailpwd)
+      server.set_debuglevel(0)
+      server.send_message(msg)
 
 
 @app.route("/ping")
@@ -50,6 +94,7 @@ def beeftimes():
     }
    t = calctimings(tvalues)
    t['time'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+   sendtimings(t)
    return render_template('beef-times.html', **t)
 
 if __name__ == "__main__":
