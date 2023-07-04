@@ -41,8 +41,9 @@ def sendtimings(vars):
 
    msg = EmailMessage()
    msg['Subject'] = 'Beef cooking timings'
-   msg['From'] = mailuser
+   msg['From'] = f"Beef Cooking Calculator <{mailuser}>"
    msg['To'] = 'marek.wolski+cookingbeef@gmail.com'
+   # msg['To'] = 'marek.wolski+cookingbeef@gmail.com,marek.wolski@live.com'
 
    msgtext = (
       f'<!DOCTYPE html>'
