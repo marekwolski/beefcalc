@@ -58,7 +58,8 @@ def sendtimings(vars):
       f'<p><b style="font-size: larger;">{vars["outofoven"]}</b> Take the beef out of the oven to rest.</p>'
       f'<p><b style="font-size: larger;">{vars["carve"]}</b> Carve, serve and enjoy!</p>'
       f'<br><hr>'
-      f'Beef cooking times requested at {vars["time"]}'
+      f'Beef cooking times requested at {vars["time"]}<br>'
+      f'Beef cooking calculator http://192.168.1.44:8081/'
       f'</body>'
       f'</html>'
    )
