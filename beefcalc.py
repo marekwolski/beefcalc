@@ -42,14 +42,14 @@ def sendtimings(vars):
    msg = EmailMessage()
    msg['Subject'] = 'Beef cooking timings'
    msg['From'] = f"Beef Cooking Calculator <{mailuser}>"
-   msg['To'] = 'marek.wolski+cookingbeef@gmail.com'
+   msg['To'] = 'marek.wolski+cookingbeef@gmail.com,'
    # msg['To'] = 'marek.wolski+cookingbeef@gmail.com,marek.wolski@live.com'
 
    msgtext = (
       f'<!DOCTYPE html>'
       f'<html>'
       f'<body>'
-      f'<h1>Hello, here are your beef cooking timings:</h1>'
+      f'<h1>Hello! Here are your beef cooking timings:</h1>'
       f'<p>These are based on a joint weight of {vars["weight"]}kg and a desired serving time of {vars["carve"]}.<br>'
       f'It includes {vars["warmup"]} minutes to allow the oven to get to temperature (200\N{DEGREE SIGN}C) '
       f'and {vars["standing"]} minutes resting time before carving.</p>'
@@ -96,6 +96,9 @@ def beeftimes():
     }
    t = calctimings(tvalues)
    t['time'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+   t['email1'] = request.args.get('email1') # returns 'None' if not checked
+   t['email2'] = request.args.get('email2') # returns 'None' if not checked
+   t['email3'] = request.args.get('email3') # returns 'None' if not checked
    sendtimings(t)
    return render_template('beef-times.html', **t)
 
