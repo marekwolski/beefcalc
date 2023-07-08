@@ -8,27 +8,27 @@
       <form action="/beeftimes" method="GET">
           <p>
             <label for="weight">Weight (kgs):</label>
-            <input type="number" id="weight" name="weight" min="0.1" max="5" step="0.1" value="1.2">
+            <input type="number" name="weight" min="0.1" max="5" step="0.1" value="1.2">
           </p>
           <p>
             <label for="warmup">Oven warm up time (mins):</label>
-            <input type="number" id="warmup" name="warmup" min="10" max="20" step="1" value="10">
+            <input type="number" name="warmup" min="10" max="20" step="1" value="10">
           </p>
           <p>
             <label for="standing">Standing time after cooking (mins):</label>
-            <input type="number" id="standing" name="standing" min="10" max="40" step="5" value="30">
+            <input type="number" name="standing" min="10" max="40" step="5" value="30">
           </p>
           <p>
             <label for="serve">Required serving time:</label>
-            <input type="time" id="serve" name="serve">
+            <input type="time" name="serve">
           </p>
           <p>
             Check which email addresses to send the timings to:<br>
-            <input type="checkbox" id="email1" name="email1" value="user1">
+            <input type="checkbox" name="email1" value="user1">
             <label for="email1"> Marek</label><br>
-            <input type="checkbox" id="email2" name="email2" value="user2">
+            <input type="checkbox" name="email2" value="user2">
             <label for="email2"> Lizzie</label><br>
-            <input type="checkbox" id="email3" name="email3" value="user3">
+            <input type="checkbox" name="email3" value="user3">
             <label for="email3"> Anna</label><br>
           </p>
           <input type="submit" value="Submit">
