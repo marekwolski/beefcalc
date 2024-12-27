@@ -60,7 +60,7 @@ def sendtimings(vars):
       f'<p><b style="font-size: larger;">{vars["carve"]}</b> Carve, serve and enjoy!</p>'
       f'<br><hr>'
       f'Beef cooking times requested at {vars["time"]}<br>'
-      f'Beef cooking calculator http://192.168.1.44:8081/'
+      f'Beef cooking calculator on {os.uname()[1]} (http://192.168.1.44:8081/)'
       f'</body>'
       f'</html>'
    )
@@ -82,7 +82,8 @@ def ping():
 def beefcalculator():
     t = {
        'title': 'Beef Cooking: Timing Calculator',
-       'time': datetime.now().strftime("%Y-%m-%d %H:%M")
+       'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
+       'host': os.uname()[1]
     }
     return render_template('beefcalc.html', **t)
 
@@ -96,6 +97,7 @@ def beeftimes():
     }
    t = calctimings(tvalues)
    t['time'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+   t['host'] = os.uname()[1]
    t['email1'] = request.args.get('email1') # returns 'None' if not checked
    t['email2'] = request.args.get('email2') # returns 'None' if not checked
    t['email3'] = request.args.get('email3') # returns 'None' if not checked
