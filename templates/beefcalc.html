@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-   <head>
-      <title>{{ title }}</title>
-   </head>
+<head>
+  <title>{{ title }}</title>
+  <style>
+    h1 {
+      color: maroon;
+      /* margin-left: 40px; */
+    }
+    body {
+      background-color: cornsilk;
+    }
+    p {
+      font-size: 2vw;
+    }
+    input[type=number], input[type=time] {
+      border: 2px solid darkslateblue;
+      border-radius: 4px;
+      font-size: 2vw;
+      /* width: 25%; */
+      padding: 2px 20px;
+      /* margin: 8px 0; */
+    }
+    input[type=checkbox] {
+      height: 20px;
+      width: 20px;
+    }
+    input:focus {
+      background-color: mediumaquamarine;
+    }
+  </style>
+</head>
 
    <body>
-      <h1>Hello! To get your beef cooking timings please answer the following:</h1>
+      <h1>Hello and welcome to Beefcalc! </h1>
+      <h1> To get your beef cooking timings please answer the following:</h1>
       <form action="/beeftimes" method="GET">
           <p>
             <label for="weight">Weight (kgs):</label>
@@ -32,10 +60,9 @@
             <label for="email3"> Anna</label><br>
           </p>
           <input type="submit" value="Submit">
-
       </form>
     
       <br><br><hr>
-      Beef cooking times requested from this server at {{ time }}
+      Beef cooking times requested from this server ({{host}}) at {{ time }}
    </body>
 </html>
